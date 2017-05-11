@@ -9,7 +9,9 @@ class DockingStation
   end
   def release_bike
     fail "no bikes available" if empty?
-    @bikes.pop
+    working_bikes = @bikes.select{|bike| bike.working?}
+    fail "no working bikes available" if working_bikes == []
+    @bikes.delete(working_bikes.pop)
   end
   def dock(bike, status = true)
     fail "station full" if full?

@@ -44,4 +44,13 @@ describe DockingStation do
     subject.dock(bike)
     expect(subject.bikes).to include(bike)
   end
+  it "should raise an error if trying to release a bike from a docking station only containing broken bikes" do
+    5.times{subject.dock(Bike.new, false)}
+    expect{(subject.release_bike)}.to raise_error("no working bikes available")
+  end
+  it "should only release a bike from the dock if it is working" do
+    subject.dock(Bike.new)
+    5.times{subject.dock(Bike.new, false)}
+    expect(subject.release_bike).to be_working
+  end
 end
