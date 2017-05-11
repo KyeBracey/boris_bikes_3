@@ -1,4 +1,5 @@
-require "dockingstation.rb"
+require "dockingstation"
+require "bike"
 
 describe DockingStation do
   it { is_expected.to respond_to :release_bike}
@@ -30,12 +31,9 @@ describe DockingStation do
   it "should set capacity to 20 when no arguments are passed" do
     expect(DockingStation.new.capacity).to eq 20
   end
-  it "should allow a user to report a bike as broken when docking it" do
-    expect(subject).to respond_to(:dock).with(2).arguments
-  end
   it "should allow bikes to be docked when they are not working" do
     bike = Bike.new
-    bike.is_working = false
+    bike.report_broken
     subject.dock(bike)
     expect(subject.bikes).to include(bike)
   end
@@ -45,12 +43,22 @@ describe DockingStation do
     expect(subject.bikes).to include(bike)
   end
   it "should raise an error if trying to release a bike from a docking station only containing broken bikes" do
-    5.times{subject.dock(Bike.new, false)}
+    bike = Bike.new
+    bike.report_broken
+    subject.dock(bike)
     expect{(subject.release_bike)}.to raise_error("no working bikes available")
   end
   it "should only release a bike from the dock if it is working" do
     subject.dock(Bike.new)
-    5.times{subject.dock(Bike.new, false)}
+    bike = Bike.new
+    bike.report_broken
+    subject.dock(bike)
     expect(subject.release_bike).to be_working
+  end
+end
+
+describe Bike do
+  it "should be able to be reported broken" do
+    expect(subject.report_broken).to eq false
   end
 end

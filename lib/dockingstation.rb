@@ -13,9 +13,8 @@ class DockingStation
     fail "no working bikes available" if working_bikes == []
     @bikes.delete(working_bikes.pop)
   end
-  def dock(bike, status = true)
+  def dock(bike)
     fail "station full" if full?
-    bike.is_working = false if status == false
     @bikes << bike
   end
 
