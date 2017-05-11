@@ -11,8 +11,9 @@ class DockingStation
     fail "no bikes available" if empty?
     @bikes.pop
   end
-  def dock(bike)
+  def dock(bike, status = true)
     fail "station full" if full?
+    bike.is_working = false if status == false
     @bikes << bike
   end
 

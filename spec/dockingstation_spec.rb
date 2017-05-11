@@ -30,4 +30,18 @@ describe DockingStation do
   it "should set capacity to 20 when no arguments are passed" do
     expect(DockingStation.new.capacity).to eq 20
   end
+  it "should allow a user to report a bike as broken when docking it" do
+    expect(subject).to respond_to(:dock).with(2).arguments
+  end
+  it "should allow bikes to be docked when they are not working" do
+    bike = Bike.new
+    bike.is_working = false
+    subject.dock(bike)
+    expect(subject.bikes).to include(bike)
+  end
+  it "should allow bikes to be docked when they are working" do
+    bike = Bike.new
+    subject.dock(bike)
+    expect(subject.bikes).to include(bike)
+  end
 end
