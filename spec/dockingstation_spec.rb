@@ -16,12 +16,12 @@ describe DockingStation do
   end
   it "should raise an error when releasing a bike from an empty docking station" do
     station = DockingStation.new([])
-    expect{station.release_bike}.to raise_error
+    expect{station.release_bike}.to raise_error("no bikes available")
   end
   it "should raise an error when the station is full and we want to dock a bike" do
     station = DockingStation.new([])
     20.times { station.dock(Bike.new) }
-    expect{station.dock(Bike.new)}.to raise_error
+    expect{station.dock(Bike.new)}.to raise_error("station full")
   end
 
 end
