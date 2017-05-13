@@ -56,10 +56,3 @@ describe DockingStation do
     expect(subject.release_bike).to be_working
   end
 end
-
-describe Bike do
-  it "should be able to be reported broken" do
-    subject.report_broken
-    expect(subject).to be_broken
-  end
-end

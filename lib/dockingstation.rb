@@ -18,6 +18,7 @@ class DockingStation
     @bikes << bike
   end
 
+  private
   def empty?
     @bikes.empty?
   end
@@ -25,6 +26,4 @@ class DockingStation
   def full?
     @bikes.length == DEFAULT_CAPACITY
   end
-
-  private :empty?, :full?
 end
